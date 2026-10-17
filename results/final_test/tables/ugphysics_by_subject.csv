@@ -1,0 +1,13 @@
+subject,items,qwen35-2b-nothink-test,ft-qwen-v1.2-lora-s647-x50-test
+AtomicPhysics,100,27.0,26.0
+ClassicalElectromagnetism,100,16.0,15.0
+ClassicalMechanics,100,16.0,26.0
+Electrodynamics,84,10.7,17.9
+QuantumMechanics,100,11.0,18.0
+Relativity,100,21.0,20.0
+SemiconductorPhysics,86,23.3,31.4
+Solid-StatePhysics,72,11.1,11.1
+StatisticalMechanics,100,8.0,6.0
+TheoreticalMechanics,100,8.0,12.0
+Thermodynamics,100,19.0,20.0
+WaveOptics,100,16.0,13.0

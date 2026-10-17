@@ -1,0 +1,14 @@
+subject,items,lfm25-1.2b-thinking,qwen35-2b-nothink,qwen35-2b-think,ft-qwen-v1.2-lora-s647,ft-qwen-v1.2-lora-s647-x50
+AtomicPhysics,100,16.0,22.8,0.0,24.0,31.0
+ClassicalElectromagnetism,100,11.0,10.1,0.0,16.0,15.0
+ClassicalMechanics,100,10.0,16.7,0.0,17.0,15.0
+Electrodynamics,100,2.0,12.3,0.0,11.0,13.0
+GeometricalOptics,58,6.9,15.5,0.0,13.8,17.2
+QuantumMechanics,100,13.0,15.0,0.0,15.0,17.0
+Relativity,100,7.0,10.3,0.0,13.0,10.0
+SemiconductorPhysics,100,26.0,16.5,0.0,27.0,25.0
+Solid-StatePhysics,100,10.0,15.2,0.0,12.0,15.0
+StatisticalMechanics,100,10.0,6.2,0.0,12.0,9.0
+TheoreticalMechanics,100,3.0,3.8,0.0,9.0,10.0
+Thermodynamics,100,8.0,13.6,0.0,10.0,19.0
+WaveOptics,100,12.0,18.4,0.0,24.0,29.0

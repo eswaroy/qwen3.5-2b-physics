@@ -1,0 +1,51 @@
+{
+  "run": "lfm25-1.2b-thinking",
+  "cfg": {
+    "model": "LiquidAI/LFM2.5-1.2B-Thinking",
+    "template_kwargs": {},
+    "adapter": null,
+    "max_new_tokens": 4096,
+    "repetition_penalty": 1.0,
+    "temperature": 0.0,
+    "loop_stop": true,
+    "dtype": "auto"
+  },
+  "cfg_hash": "42ed01623bfa",
+  "backend": "hf",
+  "info": {
+    "dtype": "float16",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.19.0",
+    "model_class": "Lfm2ForCausalLM",
+    "model_commit": null,
+    "eos_ids": [
+      7
+    ],
+    "n_params": 1170340608
+  },
+  "harness_version": "1.0",
+  "updated": "2026-10-07 14:05:11",
+  "created": "2026-10-07 07:00:58",
+  "plan": {
+    "ugphysics": 100,
+    "physicseval": 25,
+    "math500": 30
+  },
+  "padding": {
+    "safe": true,
+    "agreement": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "prompt_tokens": [
+      145,
+      205,
+      242,
+      739
+    ]
+  },
+  "gpu_seconds": 2523.2
+}

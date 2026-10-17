@@ -1,0 +1,54 @@
+{
+  "run": "qwen35-2b-nothink",
+  "cfg": {
+    "model": "Qwen/Qwen3.5-2B",
+    "template_kwargs": {
+      "enable_thinking": false
+    },
+    "adapter": null,
+    "max_new_tokens": 4096,
+    "repetition_penalty": 1.0,
+    "temperature": 0.0,
+    "loop_stop": true,
+    "dtype": "auto"
+  },
+  "cfg_hash": "916f4d8b3f32",
+  "backend": "hf",
+  "info": {
+    "dtype": "float16",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.20.1",
+    "model_class": "Qwen3_5ForCausalLM",
+    "model_commit": null,
+    "eos_ids": [
+      248044,
+      248046
+    ],
+    "n_params": 1881825088
+  },
+  "harness_version": "1.4",
+  "updated": "2026-10-17 01:39:46",
+  "created": "2026-10-07 09:07:48",
+  "plan": {
+    "ugphysics": 100,
+    "physicseval": 25,
+    "math500": 30
+  },
+  "padding": {
+    "safe": true,
+    "agreement": [
+      1.0,
+      0.583,
+      1.0,
+      1.0
+    ],
+    "prompt_tokens": [
+      201,
+      240,
+      138,
+      756
+    ]
+  },
+  "gpu_seconds": 3939.3
+}

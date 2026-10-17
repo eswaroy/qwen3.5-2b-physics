@@ -1,0 +1,278 @@
+{
+  "generated": "2026-10-17 07:57:07",
+  "harness_version": "1.4",
+  "runs": {
+    "qwen35-2b-nothink-test": {
+      "meta": {
+        "run": "qwen35-2b-nothink-test",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": false
+          },
+          "adapter": null,
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "916f4d8b3f32",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.20.1",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.4",
+        "updated": "2026-10-17 05:33:32",
+        "created": "2026-10-16 15:12:34",
+        "plan": {
+          "ugphysics": [
+            100,
+            200
+          ]
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            202,
+            140,
+            730,
+            242
+          ]
+        },
+        "gpu_seconds": 4258.1
+      },
+      "benchmarks": {
+        "ugphysics": {
+          "n": 1142,
+          "n_planned": 1142,
+          "complete": true,
+          "rule": {
+            "n": 1142,
+            "k": 179,
+            "raw": 0.15674255691768826,
+            "wilson": [
+              0.1368112052944913,
+              0.17897554917488734
+            ],
+            "weighted": 0.15931365997416427,
+            "ci": [
+              0.1359982619775491,
+              0.18466545021821965
+            ],
+            "macro": 0.15590100898240433
+          },
+          "rule_units": {
+            "n": 1142,
+            "k": 179,
+            "raw": 0.15674255691768826,
+            "wilson": [
+              0.1368112052944913,
+              0.17897554917488734
+            ],
+            "weighted": 0.15931365997416427,
+            "ci": [
+              0.1359982619775491,
+              0.18466545021821965
+            ],
+            "macro": 0.15590100898240433
+          },
+          "marj": null,
+          "marj_bounds": [
+            0.15931365997416427,
+            0.6664377316670539
+          ],
+          "judge_needed": 599,
+          "judge_done": 0,
+          "generation": {
+            "n": 1142,
+            "mean_new_tokens": 2720.4597197898424,
+            "median_new_tokens": 3862.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.0,
+            "stop": 0.489492119089317,
+            "length": 0.489492119089317,
+            "loop": 0.021015761821366025,
+            "no_final": 0.0,
+            "no_boxed": 0.38528896672504376,
+            "tok_per_s": 136.80211114790364,
+            "gpu_hours": 6.30831111111111
+          }
+        }
+      }
+    },
+    "ft-qwen-v1.2-lora-s647-x50-test": {
+      "meta": {
+        "run": "ft-qwen-v1.2-lora-s647-x50-test",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": false
+          },
+          "adapter": "/content/drive/MyDrive/physics_eval/train_runs/qwen-v1.2-lora/ckpt-00647-x50",
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "9efeb5dd6566",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.20.1",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.4",
+        "updated": "2026-10-17 01:44:37",
+        "created": "2026-10-16 15:52:31",
+        "plan": {
+          "ugphysics": [
+            100,
+            200
+          ]
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            202,
+            140,
+            730,
+            242
+          ]
+        },
+        "gpu_seconds": 3395.4
+      },
+      "benchmarks": {
+        "ugphysics": {
+          "n": 1142,
+          "n_planned": 1142,
+          "complete": true,
+          "rule": {
+            "n": 1142,
+            "k": 206,
+            "raw": 0.18038528896672504,
+            "wilson": [
+              0.15916727583537474,
+              0.20374641136187835
+            ],
+            "weighted": 0.18939648531773404,
+            "ci": [
+              0.16317042157709918,
+              0.21655004059052108
+            ],
+            "macro": 0.18030300233788607
+          },
+          "rule_units": {
+            "n": 1142,
+            "k": 206,
+            "raw": 0.18038528896672504,
+            "wilson": [
+              0.15916727583537474,
+              0.20374641136187835
+            ],
+            "weighted": 0.18939648531773404,
+            "ci": [
+              0.16317042157709918,
+              0.21655004059052108
+            ],
+            "macro": 0.18030300233788607
+          },
+          "marj": null,
+          "marj_bounds": [
+            0.18939648531773404,
+            0.9285703560246917
+          ],
+          "judge_needed": 858,
+          "judge_done": 0,
+          "generation": {
+            "n": 1142,
+            "mean_new_tokens": 1006.0971978984238,
+            "median_new_tokens": 725.5,
+            "p90_new_tokens": 1781.900000000001,
+            "think_share": 0.0,
+            "stop": 0.9168126094570929,
+            "length": 0.0691768826619965,
+            "loop": 0.014010507880910683,
+            "no_final": 0.0,
+            "no_boxed": 0.08143607705779335,
+            "tok_per_s": 67.75812460229889,
+            "gpu_hours": 4.710230555555556
+          }
+        }
+      }
+    }
+  },
+  "head_to_head": [
+    {
+      "n": 1142,
+      "a": 0.15931365997416427,
+      "b": 0.18939648531773404,
+      "diff": -0.03008282534356977,
+      "ci": [
+        -0.057029189423648395,
+        -0.0034172818097290185
+      ],
+      "a_only": 75,
+      "b_only": 102,
+      "p": 0.050360539517611935,
+      "significant": true,
+      "A": "qwen35-2b-nothink-test",
+      "B": "ft-qwen-v1.2-lora-s647-x50-test",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 1142,
+      "a": 0.15931365997416427,
+      "b": 0.18939648531773404,
+      "diff": -0.03008282534356977,
+      "ci": [
+        -0.057029189423648395,
+        -0.0034172818097290185
+      ],
+      "a_only": 75,
+      "b_only": 102,
+      "p": 0.050360539517611935,
+      "significant": true,
+      "A": "qwen35-2b-nothink-test",
+      "B": "ft-qwen-v1.2-lora-s647-x50-test",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    }
+  ]
+}

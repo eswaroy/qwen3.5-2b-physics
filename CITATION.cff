@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this model, its data or its code, please cite it as below."
+title: "Qwen3.5-2B Physics: a physics fine-tune of Qwen3.5-2B trained on free Colab GPUs"
+type: software
+authors:
+  - name: "eswaroy"
+repository-code: "https://github.com/eswaroy/qwen3.5-2b-physics"
+url: "https://huggingface.co/eswaroy/qwen3.5-2b-physics"
+license: MIT
+date-released: "2026-10-17"
+keywords:
+  - physics
+  - large language model
+  - LoRA
+  - UGPhysics
+  - Qwen3.5

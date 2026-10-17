@@ -1,0 +1,6 @@
+reasoning skill,items,lfm25-1.2b-thinking,qwen35-2b-nothink,qwen35-2b-think,ft-qwen-v1.2-lora-s647,ft-qwen-v1.2-lora-s647-x50
+Knowledge Recall,119,30.3,35.3,0.0,30.3,36.1
+Laws Application,451,9.3,13.7,0.0,16.9,20.0
+Math Derivation,481,6.7,8.0,0.0,11.4,9.8
+Practical Application,159,8.8,14.0,0.0,14.5,18.9
+Unlabelled,48,16.7,16.2,0.0,16.7,16.7

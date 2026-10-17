@@ -1,0 +1,1262 @@
+{
+  "generated": "2026-10-17 07:57:11",
+  "harness_version": "1.4",
+  "runs": {
+    "lfm25-1.2b-thinking": {
+      "meta": {
+        "run": "lfm25-1.2b-thinking",
+        "cfg": {
+          "model": "LiquidAI/LFM2.5-1.2B-Thinking",
+          "template_kwargs": {},
+          "adapter": null,
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "42ed01623bfa",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.19.0",
+          "model_class": "Lfm2ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            7
+          ],
+          "n_params": 1170340608
+        },
+        "harness_version": "1.0",
+        "updated": "2026-10-07 14:05:11",
+        "created": "2026-10-07 07:00:58",
+        "plan": {
+          "ugphysics": 100,
+          "physicseval": 25,
+          "math500": 30
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            145,
+            205,
+            242,
+            739
+          ]
+        },
+        "gpu_seconds": 2523.2
+      },
+      "benchmarks": {
+        "ugphysics": {
+          "n": 1258,
+          "n_planned": 1258,
+          "complete": true,
+          "rule": {
+            "n": 1258,
+            "k": 132,
+            "raw": 0.10492845786963434,
+            "wilson": [
+              0.08917906857369311,
+              0.12308338972535172
+            ],
+            "weighted": 0.11316485507246378,
+            "ci": [
+              0.09097092391304348,
+              0.13523899456521737
+            ],
+            "macro": 0.10376657824933687
+          },
+          "rule_units": {
+            "n": 1258,
+            "k": 132,
+            "raw": 0.10492845786963434,
+            "wilson": [
+              0.08917906857369311,
+              0.12308338972535172
+            ],
+            "weighted": 0.11316485507246378,
+            "ci": [
+              0.09097092391304348,
+              0.13523899456521737
+            ],
+            "macro": 0.10376657824933687
+          },
+          "marj": null,
+          "marj_bounds": [
+            0.11316485507246378,
+            0.5080887681159421
+          ],
+          "judge_needed": 491,
+          "judge_done": 0,
+          "generation": {
+            "n": 1258,
+            "mean_new_tokens": 3658.0715421303657,
+            "median_new_tokens": 4096.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.9790545288920509,
+            "stop": 0.3863275039745628,
+            "length": 0.6120826709062003,
+            "loop": 0.001589825119236884,
+            "no_final": 0.48569157392686807,
+            "no_boxed": 0.49761526232114467,
+            "tok_per_s": 286.50941146659244,
+            "gpu_hours": 4.461608333333333
+          }
+        },
+        "physicseval": {
+          "n": 356,
+          "n_planned": 356,
+          "complete": true,
+          "judged": 104,
+          "generation": {
+            "n": 356,
+            "mean_new_tokens": 2725.0814606741574,
+            "median_new_tokens": 2547.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.9838506013117843,
+            "stop": 0.6825842696629213,
+            "length": 0.3146067415730337,
+            "loop": 0.0028089887640449437,
+            "no_final": 0.29213483146067415,
+            "no_boxed": 0.3146067415730337,
+            "tok_per_s": 216.77213351387826,
+            "gpu_hours": 1.24315
+          }
+        },
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 133,
+            "raw": 0.6333333333333333,
+            "wilson": [
+              0.5663041498051676,
+              0.6955719304336633
+            ],
+            "weighted": 0.6774,
+            "ci": [
+              0.6142500000000001,
+              0.7382066666666667
+            ],
+            "macro": 0.6333333333333334
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 2738.647619047619,
+            "median_new_tokens": 2767.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.9465203541546401,
+            "stop": 0.6761904761904762,
+            "length": 0.319047619047619,
+            "loop": 0.004761904761904762,
+            "no_final": 0.3047619047619048,
+            "no_boxed": 0.3238095238095238,
+            "tok_per_s": 227.93119847812304,
+            "gpu_hours": 0.7008888888888888
+          }
+        }
+      }
+    },
+    "qwen35-2b-nothink": {
+      "meta": {
+        "run": "qwen35-2b-nothink",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": false
+          },
+          "adapter": null,
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "916f4d8b3f32",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.20.1",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.4",
+        "updated": "2026-10-17 01:39:46",
+        "created": "2026-10-07 09:07:48",
+        "plan": {
+          "ugphysics": 100,
+          "physicseval": 25,
+          "math500": 30
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            0.583,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            201,
+            240,
+            138,
+            756
+          ]
+        },
+        "gpu_seconds": 3939.3
+      },
+      "benchmarks": {
+        "ugphysics": {
+          "n": 1008,
+          "n_planned": 1258,
+          "complete": false,
+          "rule": {
+            "n": 1008,
+            "k": 136,
+            "raw": 0.1349206349206349,
+            "wilson": [
+              0.11521040626904035,
+              0.15740301464585382
+            ],
+            "weighted": 0.1454622482196013,
+            "ci": [
+              0.11889194894706212,
+              0.1734217617758279
+            ],
+            "macro": 0.13564942991169893
+          },
+          "rule_units": {
+            "n": 1008,
+            "k": 136,
+            "raw": 0.1349206349206349,
+            "wilson": [
+              0.11521040626904035,
+              0.15740301464585382
+            ],
+            "weighted": 0.1454622482196013,
+            "ci": [
+              0.11889194894706212,
+              0.1734217617758279
+            ],
+            "macro": 0.13564942991169893
+          },
+          "marj": null,
+          "marj_bounds": [
+            0.1454622482196013,
+            0.6711331250779916
+          ],
+          "judge_needed": 551,
+          "judge_done": 0,
+          "generation": {
+            "n": 1008,
+            "mean_new_tokens": 2815.715277777778,
+            "median_new_tokens": 4096.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.0012352721280539602,
+            "stop": 0.4523809523809524,
+            "length": 0.5188492063492064,
+            "loop": 0.028769841269841268,
+            "no_final": 0.0,
+            "no_boxed": 0.4176587301587302,
+            "tok_per_s": 140.59363320462364,
+            "gpu_hours": 5.607652777777777
+          }
+        },
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 144,
+            "raw": 0.6857142857142857,
+            "wilson": [
+              0.6200666140902598,
+              0.7446893548138263
+            ],
+            "weighted": 0.7298666666666667,
+            "ci": [
+              0.673065,
+              0.7866683333333334
+            ],
+            "macro": 0.6857142857142857
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 1829.7952380952381,
+            "median_new_tokens": 1080.5,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.0,
+            "stop": 0.7285714285714285,
+            "length": 0.24761904761904763,
+            "loop": 0.023809523809523808,
+            "no_final": 0.0,
+            "no_boxed": 0.23333333333333334,
+            "tok_per_s": 97.54374474847246,
+            "gpu_hours": 1.0942583333333333
+          }
+        }
+      }
+    },
+    "qwen35-2b-think": {
+      "meta": {
+        "run": "qwen35-2b-think",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": true
+          },
+          "adapter": null,
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "6993a1198abd",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.19.0",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.0",
+        "updated": "2026-10-07 09:37:13",
+        "created": "2026-10-07 09:37:13",
+        "plan": {
+          "ugphysics": 100,
+          "physicseval": 25,
+          "math500": 30
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            199,
+            238,
+            136,
+            754
+          ]
+        }
+      },
+      "benchmarks": {
+        "ugphysics": {
+          "n": 672,
+          "n_planned": 1258,
+          "complete": false,
+          "rule": {
+            "n": 672,
+            "k": 0,
+            "raw": 0.0,
+            "wilson": [
+              0.0,
+              0.005684172149213662
+            ],
+            "weighted": 0.0,
+            "ci": [
+              0.0,
+              0.0
+            ],
+            "macro": 0.0
+          },
+          "rule_units": {
+            "n": 672,
+            "k": 0,
+            "raw": 0.0,
+            "wilson": [
+              0.0,
+              0.005684172149213662
+            ],
+            "weighted": 0.0,
+            "ci": [
+              0.0,
+              0.0
+            ],
+            "macro": 0.0
+          },
+          "marj": {
+            "n": 672,
+            "k": 0,
+            "raw": 0.0,
+            "wilson": [
+              0.0,
+              0.005684172149213662
+            ],
+            "weighted": 0.0,
+            "ci": [
+              0.0,
+              0.0
+            ],
+            "macro": 0.0
+          },
+          "marj_bounds": [
+            0.0,
+            0.0
+          ],
+          "judge_needed": 0,
+          "judge_done": 0,
+          "generation": {
+            "n": 672,
+            "mean_new_tokens": 3627.190476190476,
+            "median_new_tokens": 4096.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.9999388710926731,
+            "stop": 0.0,
+            "length": 0.7440476190476191,
+            "loop": 0.25595238095238093,
+            "no_final": 1.0,
+            "no_boxed": 1.0,
+            "tok_per_s": 187.70359817492252,
+            "gpu_hours": 3.607152777777778
+          }
+        }
+      }
+    },
+    "ft-qwen-v1.2-lora-s647": {
+      "meta": {
+        "run": "ft-qwen-v1.2-lora-s647",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": false
+          },
+          "adapter": "/content/drive/MyDrive/physics_eval/train_runs/qwen-v1.2-lora/ckpt-00647",
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "a9546f3917fa",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.19.0",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.3",
+        "updated": "2026-10-15 13:31:54",
+        "created": "2026-10-15 10:12:20",
+        "plan": {
+          "ugphysics": 100,
+          "math500": 10
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            240,
+            200,
+            662,
+            138
+          ]
+        },
+        "gpu_seconds": 11339.1
+      },
+      "benchmarks": {
+        "ugphysics": {
+          "n": 1258,
+          "n_planned": 1258,
+          "complete": true,
+          "rule": {
+            "n": 1258,
+            "k": 198,
+            "raw": 0.1573926868044515,
+            "wilson": [
+              0.1383150438891817,
+              0.17855642397176058
+            ],
+            "weighted": 0.16459601449275363,
+            "ci": [
+              0.13977531702898552,
+              0.18935335144927534
+            ],
+            "macro": 0.15676392572944298
+          },
+          "rule_units": {
+            "n": 1258,
+            "k": 198,
+            "raw": 0.1573926868044515,
+            "wilson": [
+              0.1383150438891817,
+              0.17855642397176058
+            ],
+            "weighted": 0.16459601449275363,
+            "ci": [
+              0.13977531702898552,
+              0.18935335144927534
+            ],
+            "macro": 0.15676392572944298
+          },
+          "marj": null,
+          "marj_bounds": [
+            0.16459601449275363,
+            0.9760760869565217
+          ],
+          "judge_needed": 1028,
+          "judge_done": 0,
+          "generation": {
+            "n": 1258,
+            "mean_new_tokens": 694.4992050874404,
+            "median_new_tokens": 559.5,
+            "p90_new_tokens": 1149.6,
+            "think_share": 0.0,
+            "stop": 0.9705882352941176,
+            "length": 0.021462639109697933,
+            "loop": 0.00794912559618442,
+            "no_final": 0.0,
+            "no_boxed": 0.02702702702702703,
+            "tok_per_s": 82.31206379354528,
+            "gpu_hours": 2.9484
+          }
+        },
+        "math500": {
+          "n": 70,
+          "n_planned": 70,
+          "complete": true,
+          "rule": {
+            "n": 70,
+            "k": 35,
+            "raw": 0.5,
+            "wilson": [
+              0.3859551898733622,
+              0.6140448101266378
+            ],
+            "weighted": 0.5167999999999999,
+            "ci": [
+              0.3935950000000001,
+              0.63701
+            ],
+            "macro": 0.5
+          },
+          "generation": {
+            "n": 70,
+            "mean_new_tokens": 589.4571428571429,
+            "median_new_tokens": 374.5,
+            "p90_new_tokens": 1126.4,
+            "think_share": 0.0,
+            "stop": 0.9571428571428572,
+            "length": 0.02857142857142857,
+            "loop": 0.014285714285714285,
+            "no_final": 0.0,
+            "no_boxed": 0.04285714285714286,
+            "tok_per_s": 56.92095461442957,
+            "gpu_hours": 0.20136111111111113
+          }
+        }
+      }
+    },
+    "ft-qwen-v1.2-lora-s647-x50": {
+      "meta": {
+        "run": "ft-qwen-v1.2-lora-s647-x50",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": false
+          },
+          "adapter": "/content/drive/MyDrive/physics_eval/train_runs/qwen-v1.2-lora/ckpt-00647-x50",
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "9efeb5dd6566",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.20.1",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.4",
+        "updated": "2026-10-17 02:24:42",
+        "created": "2026-10-15 11:09:22",
+        "plan": {
+          "ugphysics": 100,
+          "math500": 30
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            240,
+            200,
+            662,
+            138
+          ]
+        },
+        "gpu_seconds": 9338.6
+      },
+      "benchmarks": {
+        "ugphysics": {
+          "n": 1258,
+          "n_planned": 1258,
+          "complete": true,
+          "rule": {
+            "n": 1258,
+            "k": 218,
+            "raw": 0.17329093799682035,
+            "wilson": [
+              0.15337770745609441,
+              0.19519346027208956
+            ],
+            "weighted": 0.18265579710144927,
+            "ci": [
+              0.1564066123188406,
+              0.20873328804347824
+            ],
+            "macro": 0.17326259946949604
+          },
+          "rule_units": {
+            "n": 1258,
+            "k": 218,
+            "raw": 0.17329093799682035,
+            "wilson": [
+              0.15337770745609441,
+              0.19519346027208956
+            ],
+            "weighted": 0.18265579710144927,
+            "ci": [
+              0.1564066123188406,
+              0.20873328804347824
+            ],
+            "macro": 0.17326259946949604
+          },
+          "marj": null,
+          "marj_bounds": [
+            0.18265579710144927,
+            0.9198007246376811
+          ],
+          "judge_needed": 950,
+          "judge_done": 0,
+          "generation": {
+            "n": 1258,
+            "mean_new_tokens": 1011.9546899841017,
+            "median_new_tokens": 710.0,
+            "p90_new_tokens": 1727.7999999999997,
+            "think_share": 0.0,
+            "stop": 0.9125596184419714,
+            "length": 0.07710651828298887,
+            "loop": 0.010333863275039745,
+            "no_final": 0.0,
+            "no_boxed": 0.08505564387917329,
+            "tok_per_s": 66.8314916300452,
+            "gpu_hours": 5.291247222222223
+          }
+        },
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 128,
+            "raw": 0.6095238095238096,
+            "wilson": [
+              0.5421379687498527,
+              0.6729745257320443
+            ],
+            "weighted": 0.6354666666666667,
+            "ci": [
+              0.5657033333333333,
+              0.6990700000000001
+            ],
+            "macro": 0.6095238095238095
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 1046.357142857143,
+            "median_new_tokens": 548.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.0,
+            "stop": 0.8571428571428571,
+            "length": 0.12857142857142856,
+            "loop": 0.014285714285714285,
+            "no_final": 0.0,
+            "no_boxed": 0.1761904761904762,
+            "tok_per_s": 59.60968252116661,
+            "gpu_hours": 1.0239527777777777
+          }
+        }
+      }
+    }
+  },
+  "head_to_head": [
+    {
+      "n": 1008,
+      "a": 0.11057086923269986,
+      "b": 0.1454622482196013,
+      "diff": -0.03489137898690146,
+      "ci": [
+        -0.06346335417682238,
+        -0.006243129059198907
+      ],
+      "a_only": 47,
+      "b_only": 82,
+      "p": 0.002618326772195623,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "qwen35-2b-nothink",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 1008,
+      "a": 0.11057086923269986,
+      "b": 0.1454622482196013,
+      "diff": -0.03489137898690146,
+      "ci": [
+        -0.06346335417682238,
+        -0.006243129059198907
+      ],
+      "a_only": 47,
+      "b_only": 82,
+      "p": 0.002618326772195623,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "qwen35-2b-nothink",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 210,
+      "a": 0.6774,
+      "b": 0.7298666666666667,
+      "diff": -0.05246666666666667,
+      "ci": [
+        -0.11127666666666666,
+        0.00781833333333323
+      ],
+      "a_only": 16,
+      "b_only": 27,
+      "p": 0.12628947438543037,
+      "significant": false,
+      "A": "lfm25-1.2b-thinking",
+      "B": "qwen35-2b-nothink",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 672,
+      "a": 0.12251737584323762,
+      "b": 0.0,
+      "diff": 0.12251737584323762,
+      "ci": [
+        0.09173166601900981,
+        0.15384748531595513
+      ],
+      "a_only": 75,
+      "b_only": 0,
+      "p": 5.293955920339377e-23,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "qwen35-2b-think",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": false,
+      "verdict": "A better"
+    },
+    {
+      "n": 672,
+      "a": 0.12251737584323762,
+      "b": 0.0,
+      "diff": 0.12251737584323762,
+      "ci": [
+        0.09173166601900981,
+        0.15384748531595513
+      ],
+      "a_only": 75,
+      "b_only": 0,
+      "p": 5.293955920339377e-23,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "qwen35-2b-think",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": false,
+      "verdict": "A better"
+    },
+    {
+      "n": 1258,
+      "a": 0.11316485507246378,
+      "b": 0.16459601449275363,
+      "diff": -0.05143115942028986,
+      "ci": [
+        -0.07545905797101449,
+        -0.02666394927536234
+      ],
+      "a_only": 51,
+      "b_only": 117,
+      "p": 3.805234520289097e-07,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 1258,
+      "a": 0.11316485507246378,
+      "b": 0.16459601449275363,
+      "diff": -0.05143115942028986,
+      "ci": [
+        -0.07545905797101449,
+        -0.02666394927536234
+      ],
+      "a_only": 51,
+      "b_only": 117,
+      "p": 3.805234520289097e-07,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 70,
+      "a": 0.6751999999999999,
+      "b": 0.5167999999999999,
+      "diff": 0.1584,
+      "ci": [
+        0.057545000000000006,
+        0.27261499999999994
+      ],
+      "a_only": 12,
+      "b_only": 3,
+      "p": 0.03515625,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": false,
+      "verdict": "A better"
+    },
+    {
+      "n": 1258,
+      "a": 0.11316485507246378,
+      "b": 0.18265579710144927,
+      "diff": -0.06949094202898551,
+      "ci": [
+        -0.09270484601449276,
+        -0.046011775362318846
+      ],
+      "a_only": 41,
+      "b_only": 127,
+      "p": 1.9580390976135314e-11,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 1258,
+      "a": 0.11316485507246378,
+      "b": 0.18265579710144927,
+      "diff": -0.06949094202898551,
+      "ci": [
+        -0.09270484601449276,
+        -0.046011775362318846
+      ],
+      "a_only": 41,
+      "b_only": 127,
+      "p": 1.9580390976135314e-11,
+      "significant": true,
+      "A": "lfm25-1.2b-thinking",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 210,
+      "a": 0.6774,
+      "b": 0.6354666666666667,
+      "diff": 0.041933333333333336,
+      "ci": [
+        -0.019673333333333327,
+        0.11000166666666668
+      ],
+      "a_only": 27,
+      "b_only": 22,
+      "p": 0.5681724128491652,
+      "significant": false,
+      "A": "lfm25-1.2b-thinking",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 672,
+      "a": 0.16534486447529925,
+      "b": 0.0,
+      "diff": 0.16534486447529925,
+      "ci": [
+        0.1296045416557167,
+        0.20020796349744863
+      ],
+      "a_only": 103,
+      "b_only": 0,
+      "p": 1.9721522630525295e-31,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "qwen35-2b-think",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": false,
+      "verdict": "A better"
+    },
+    {
+      "n": 672,
+      "a": 0.16534486447529925,
+      "b": 0.0,
+      "diff": 0.16534486447529925,
+      "ci": [
+        0.1296045416557167,
+        0.20020796349744863
+      ],
+      "a_only": 103,
+      "b_only": 0,
+      "p": 1.9721522630525295e-31,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "qwen35-2b-think",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": false,
+      "verdict": "A better"
+    },
+    {
+      "n": 1008,
+      "a": 0.1454622482196013,
+      "b": 0.16584407417938485,
+      "diff": -0.020381825959783547,
+      "ci": [
+        -0.05101158448319203,
+        0.007967063438104112
+      ],
+      "a_only": 63,
+      "b_only": 86,
+      "p": 0.0711392743591131,
+      "significant": false,
+      "A": "qwen35-2b-nothink",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": false,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 1008,
+      "a": 0.1454622482196013,
+      "b": 0.16584407417938485,
+      "diff": -0.020381825959783547,
+      "ci": [
+        -0.05101158448319203,
+        0.007967063438104112
+      ],
+      "a_only": 63,
+      "b_only": 86,
+      "p": 0.0711392743591131,
+      "significant": false,
+      "A": "qwen35-2b-nothink",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": false,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 70,
+      "a": 0.6712,
+      "b": 0.5167999999999999,
+      "diff": 0.1544,
+      "ci": [
+        0.04679000000000001,
+        0.2698
+      ],
+      "a_only": 14,
+      "b_only": 4,
+      "p": 0.0308837890625,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": false,
+      "verdict": "A better"
+    },
+    {
+      "n": 1008,
+      "a": 0.1454622482196013,
+      "b": 0.17885817887371552,
+      "diff": -0.03339593065411421,
+      "ci": [
+        -0.06395964149283986,
+        -0.0036971537338502483
+      ],
+      "a_only": 51,
+      "b_only": 86,
+      "p": 0.0035199932874412656,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 1008,
+      "a": 0.1454622482196013,
+      "b": 0.17885817887371552,
+      "diff": -0.03339593065411421,
+      "ci": [
+        -0.06395964149283986,
+        -0.0036971537338502483
+      ],
+      "a_only": 51,
+      "b_only": 86,
+      "p": 0.0035199932874412656,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 210,
+      "a": 0.7298666666666667,
+      "b": 0.6354666666666667,
+      "diff": 0.09440000000000001,
+      "ci": [
+        0.025855000000000003,
+        0.16468499999999991
+      ],
+      "a_only": 36,
+      "b_only": 20,
+      "p": 0.04404654610215078,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "A better"
+    },
+    {
+      "n": 672,
+      "a": 0.0,
+      "b": 0.16787765654770914,
+      "diff": -0.16787765654770914,
+      "ci": [
+        -0.20107644164729246,
+        -0.1329868073117874
+      ],
+      "a_only": 0,
+      "b_only": 108,
+      "p": 6.162975822039155e-33,
+      "significant": true,
+      "A": "qwen35-2b-think",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 672,
+      "a": 0.0,
+      "b": 0.16787765654770914,
+      "diff": -0.16787765654770914,
+      "ci": [
+        -0.20107644164729246,
+        -0.1329868073117874
+      ],
+      "a_only": 0,
+      "b_only": 108,
+      "p": 6.162975822039155e-33,
+      "significant": true,
+      "A": "qwen35-2b-think",
+      "B": "ft-qwen-v1.2-lora-s647",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 672,
+      "a": 0.0,
+      "b": 0.17565300484356605,
+      "diff": -0.17565300484356605,
+      "ci": [
+        -0.21243995272993227,
+        -0.14109762853093555
+      ],
+      "a_only": 0,
+      "b_only": 113,
+      "p": 1.925929944387236e-34,
+      "significant": true,
+      "A": "qwen35-2b-think",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 672,
+      "a": 0.0,
+      "b": 0.17565300484356605,
+      "diff": -0.17565300484356605,
+      "ci": [
+        -0.21243995272993227,
+        -0.14109762853093555
+      ],
+      "a_only": 0,
+      "b_only": 113,
+      "p": 1.925929944387236e-34,
+      "significant": true,
+      "A": "qwen35-2b-think",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    },
+    {
+      "n": 1258,
+      "a": 0.16459601449275363,
+      "b": 0.18265579710144927,
+      "diff": -0.018059782608695653,
+      "ci": [
+        -0.04090090579710145,
+        0.004440398550724628
+      ],
+      "a_only": 55,
+      "b_only": 75,
+      "p": 0.09525341143251807,
+      "significant": false,
+      "A": "ft-qwen-v1.2-lora-s647",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule accuracy",
+      "same_items": true,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 1258,
+      "a": 0.16459601449275363,
+      "b": 0.18265579710144927,
+      "diff": -0.018059782608695653,
+      "ci": [
+        -0.04090090579710145,
+        0.004440398550724628
+      ],
+      "a_only": 55,
+      "b_only": 75,
+      "p": 0.09525341143251807,
+      "significant": false,
+      "A": "ft-qwen-v1.2-lora-s647",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "ugphysics",
+      "metric": "rule+units accuracy",
+      "same_items": true,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 70,
+      "a": 0.5167999999999999,
+      "b": 0.6944,
+      "diff": -0.17760000000000004,
+      "ci": [
+        -0.30560000000000004,
+        -0.05318500000000008
+      ],
+      "a_only": 4,
+      "b_only": 15,
+      "p": 0.0192108154296875,
+      "significant": true,
+      "A": "ft-qwen-v1.2-lora-s647",
+      "B": "ft-qwen-v1.2-lora-s647-x50",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": false,
+      "verdict": "B better"
+    }
+  ]
+}

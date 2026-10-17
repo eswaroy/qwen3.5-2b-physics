@@ -1,0 +1,22 @@
+# Python and notebooks
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Model weights and training state (published on Hugging Face instead)
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.gguf
+
+# Caches and local work folders
+cache/
+hf_cache/
+.cache/
+wandb/
+
+# Secrets
+.env
+*.token

@@ -1,0 +1,16 @@
+# The notebooks install what they need in Colab. For local use:
+torch
+transformers          # a recent version with Qwen3.5 support (pip install -U transformers)
+peft
+accelerate
+safetensors
+datasets
+huggingface_hub
+numpy
+pandas
+matplotlib
+sympy
+antlr4-python3-runtime==4.11.1   # required by the UGPhysics grader
+chardet
+# optional: fast sampling for self-distillation (physself.py --backend vllm)
+# vllm

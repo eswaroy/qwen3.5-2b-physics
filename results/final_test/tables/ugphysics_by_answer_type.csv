@@ -1,0 +1,12 @@
+answer type,items,qwen35-2b-nothink-test,ft-qwen-v1.2-lora-s647-x50-test
+EQ (equation),148,9.5,18.2
+"EX
+```",1,0.0,0.0
+EX (expression),304,7.6,6.6
+IN (interval),12,8.3,0.0
+MC (multiple choice),35,25.7,68.6
+NV (number),384,24.2,25.8
+TF (true/false),32,68.8,56.2
+"\
+MC",2,50.0,100.0
+multiple answers,224,7.1,7.1

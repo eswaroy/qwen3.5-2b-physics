@@ -1,0 +1,53 @@
+{
+  "run": "ft-qwen-v1.2-lora-s647",
+  "cfg": {
+    "model": "Qwen/Qwen3.5-2B",
+    "template_kwargs": {
+      "enable_thinking": false
+    },
+    "adapter": "/content/drive/MyDrive/physics_eval/train_runs/qwen-v1.2-lora/ckpt-00647",
+    "max_new_tokens": 4096,
+    "repetition_penalty": 1.0,
+    "temperature": 0.0,
+    "loop_stop": true,
+    "dtype": "auto"
+  },
+  "cfg_hash": "a9546f3917fa",
+  "backend": "hf",
+  "info": {
+    "dtype": "float16",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.19.0",
+    "model_class": "Qwen3_5ForCausalLM",
+    "model_commit": null,
+    "eos_ids": [
+      248044,
+      248046
+    ],
+    "n_params": 1881825088
+  },
+  "harness_version": "1.3",
+  "updated": "2026-10-15 13:31:54",
+  "created": "2026-10-15 10:12:20",
+  "plan": {
+    "ugphysics": 100,
+    "math500": 10
+  },
+  "padding": {
+    "safe": true,
+    "agreement": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "prompt_tokens": [
+      240,
+      200,
+      662,
+      138
+    ]
+  },
+  "gpu_seconds": 11339.1
+}

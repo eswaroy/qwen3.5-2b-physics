@@ -1,0 +1,6 @@
+reasoning skill,items,qwen35-2b-nothink-test,ft-qwen-v1.2-lora-s647-x50-test
+Knowledge Recall,105,32.4,41.9
+Laws Application,412,20.9,21.6
+Math Derivation,468,6.8,9.4
+Practical Application,117,18.8,20.5
+Unlabelled,40,12.5,12.5

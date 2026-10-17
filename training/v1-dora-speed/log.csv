@@ -1,0 +1,1 @@
+time,step,epoch,lr,train_loss,grad_norm,tokens,sec,skipped,val_loss,closed_thinking,boxed_after_thinking,stopped,mean_tokens

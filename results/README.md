@@ -7,6 +7,7 @@ Produced by [`src/physeval.py`](../src/physeval.py). A readable summary is in [d
 | `reports/summary_final_test.md` | **main result**: this model vs base Qwen3.5-2B on the 1,142 held-out questions |
 | `reports/summary_dev_all.md` | development questions: all baselines and this model, MATH-500 on 210 questions |
 | `reports/summary_*.md` | the other reports saved during the project |
+| `compare/` | **comparison with four other small open models** on the same held-out questions (see [compare/README.md](compare/README.md)) |
 | `final_test/`, `dev/` | `summary.json` (every number in machine-readable form) and `tables/` (CSV breakdowns) for the two main reports |
 | `runs/<run>/meta.json` | settings of a run: model, adapter, chat-template options, budget, GPU, library versions |
 | `runs/<run>/gen_<benchmark>.jsonl.gz` | every generated answer (question ID, full text, token counts, finish reason) |
@@ -26,3 +27,6 @@ The benchmark questions themselves are not stored here; they are identified by `
 | `ft-qwen-v1.2-lora-s250`, `-s500`, `-s647` | experiment 3: Qwen3.5-2B + v1.2 at full strength, by checkpoint |
 | `ft-qwen-v1.2-lora-s647-x50` | **the released model** (half strength), development questions (`-test`: held-out test) |
 | `merged-check-*` | the merged model, checked against the adapter before upload |
+| `cmp-qwen3-1.7b-megascience` | MegaScience/Qwen3-1.7B-MegaScience, comparison (held-out test and MATH-500) |
+| `cmp-r1-distill-qwen-1.5b` | deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B, comparison |
+| `cmp-openreasoning-nemotron-1.5b` | nvidia/OpenReasoning-Nemotron-1.5B, comparison |

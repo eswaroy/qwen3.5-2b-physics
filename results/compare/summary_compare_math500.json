@@ -1,0 +1,617 @@
+{
+  "generated": "2026-11-19 07:49:58",
+  "harness_version": "1.5",
+  "runs": {
+    "ft-qwen-v1.2-lora-s647-x50": {
+      "meta": {
+        "run": "ft-qwen-v1.2-lora-s647-x50",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": false
+          },
+          "adapter": "/content/drive/MyDrive/physics_eval/train_runs/qwen-v1.2-lora/ckpt-00647-x50",
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "9efeb5dd6566",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.20.1",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.4",
+        "updated": "2026-10-17 02:24:42",
+        "created": "2026-10-15 11:09:22",
+        "plan": {
+          "ugphysics": 100,
+          "math500": 30
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            240,
+            200,
+            662,
+            138
+          ]
+        },
+        "gpu_seconds": 9338.6
+      },
+      "benchmarks": {
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 128,
+            "raw": 0.6095238095238096,
+            "wilson": [
+              0.5421379687498527,
+              0.6729745257320443
+            ],
+            "weighted": 0.6354666666666667,
+            "ci": [
+              0.5657033333333333,
+              0.6990700000000001
+            ],
+            "macro": 0.6095238095238095
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 1046.357142857143,
+            "median_new_tokens": 548.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.0,
+            "stop": 0.8571428571428571,
+            "length": 0.12857142857142856,
+            "loop": 0.014285714285714285,
+            "no_final": 0.0,
+            "no_boxed": 0.1761904761904762,
+            "tok_per_s": 59.60968252116661,
+            "gpu_hours": 1.0239527777777777
+          }
+        }
+      }
+    },
+    "qwen35-2b-nothink": {
+      "meta": {
+        "run": "qwen35-2b-nothink",
+        "cfg": {
+          "model": "Qwen/Qwen3.5-2B",
+          "template_kwargs": {
+            "enable_thinking": false
+          },
+          "adapter": null,
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "916f4d8b3f32",
+        "backend": "hf",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.11.0+cu130",
+          "transformers": "5.20.1",
+          "model_class": "Qwen3_5ForCausalLM",
+          "model_commit": null,
+          "eos_ids": [
+            248044,
+            248046
+          ],
+          "n_params": 1881825088
+        },
+        "harness_version": "1.4",
+        "updated": "2026-10-17 01:39:46",
+        "created": "2026-10-07 09:07:48",
+        "plan": {
+          "ugphysics": 100,
+          "physicseval": 25,
+          "math500": 30
+        },
+        "padding": {
+          "safe": true,
+          "agreement": [
+            1.0,
+            0.583,
+            1.0,
+            1.0
+          ],
+          "prompt_tokens": [
+            201,
+            240,
+            138,
+            756
+          ]
+        },
+        "gpu_seconds": 3939.3
+      },
+      "benchmarks": {
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 144,
+            "raw": 0.6857142857142857,
+            "wilson": [
+              0.6200666140902598,
+              0.7446893548138263
+            ],
+            "weighted": 0.7298666666666667,
+            "ci": [
+              0.673065,
+              0.7866683333333334
+            ],
+            "macro": 0.6857142857142857
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 1829.7952380952381,
+            "median_new_tokens": 1080.5,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.0,
+            "stop": 0.7285714285714285,
+            "length": 0.24761904761904763,
+            "loop": 0.023809523809523808,
+            "no_final": 0.0,
+            "no_boxed": 0.23333333333333334,
+            "tok_per_s": 97.54374474847246,
+            "gpu_hours": 1.0942583333333333
+          }
+        }
+      }
+    },
+    "cmp-qwen3-1.7b-megascience": {
+      "meta": {
+        "run": "cmp-qwen3-1.7b-megascience",
+        "cfg": {
+          "model": "MegaScience/Qwen3-1.7B-MegaScience",
+          "template_kwargs": {},
+          "adapter": null,
+          "max_new_tokens": 4096,
+          "repetition_penalty": 1.0,
+          "temperature": 0.0,
+          "loop_stop": true,
+          "dtype": "auto"
+        },
+        "cfg_hash": "67cb8c0e068f",
+        "backend": "vllm",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.13.0+cu130",
+          "vllm": "0.32.0",
+          "model_class": "vLLM",
+          "model_commit": null,
+          "eos_ids": [],
+          "n_params": null
+        },
+        "harness_version": "1.5",
+        "updated": "2026-10-31 18:59:15",
+        "created": "2026-10-31 16:12:15",
+        "plan": {
+          "ugphysics": [
+            100,
+            200
+          ],
+          "math500": 30
+        },
+        "gpu_seconds": 10018.7
+      },
+      "benchmarks": {
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 125,
+            "raw": 0.5952380952380952,
+            "wilson": [
+              0.5277156457794422,
+              0.6593386972482943
+            ],
+            "weighted": 0.6297333333333334,
+            "ci": [
+              0.5649299999999999,
+              0.6908683333333333
+            ],
+            "macro": 0.5952380952380952
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 1497.9142857142858,
+            "median_new_tokens": 818.0,
+            "p90_new_tokens": 4096.0,
+            "think_share": 0.0,
+            "stop": 0.8142857142857143,
+            "length": 0.1761904761904762,
+            "loop": 0.009523809523809525,
+            "no_final": 0.0,
+            "no_boxed": 0.1619047619047619,
+            "tok_per_s": 197.04953769826355,
+            "gpu_hours": 0.4434333333333333
+          }
+        }
+      }
+    },
+    "cmp-r1-distill-qwen-1.5b": {
+      "meta": {
+        "run": "cmp-r1-distill-qwen-1.5b",
+        "cfg": {
+          "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+          "template_kwargs": {},
+          "adapter": null,
+          "max_new_tokens": 8192,
+          "repetition_penalty": 1.0,
+          "temperature": 0.6,
+          "loop_stop": true,
+          "dtype": "auto",
+          "top_p": 0.95,
+          "system_in_user": true
+        },
+        "cfg_hash": "c84431f59937",
+        "backend": "vllm",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.14.0+cu130",
+          "vllm": "0.33.0",
+          "model_class": "vLLM",
+          "model_commit": null,
+          "eos_ids": [],
+          "n_params": null
+        },
+        "harness_version": "1.5",
+        "updated": "2026-11-15 09:18:46",
+        "created": "2026-10-31 15:58:11",
+        "plan": {
+          "ugphysics": [
+            100,
+            200
+          ],
+          "math500": 30
+        },
+        "gpu_seconds": 10599.8
+      },
+      "benchmarks": {
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 157,
+            "raw": 0.7476190476190476,
+            "wilson": [
+              0.6847801153214093,
+              0.8015611765507056
+            ],
+            "weighted": 0.7818666666666667,
+            "ci": [
+              0.7296583333333333,
+              0.8368099999999999
+            ],
+            "macro": 0.7476190476190476
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 3975.7619047619046,
+            "median_new_tokens": 3058.0,
+            "p90_new_tokens": 8192.0,
+            "think_share": 0.9164077565246553,
+            "stop": 0.8238095238095238,
+            "length": 0.17142857142857143,
+            "loop": 0.004761904761904762,
+            "no_final": 0.1619047619047619,
+            "no_boxed": 0.1761904761904762,
+            "tok_per_s": 370.86507495835644,
+            "gpu_hours": 0.6253472222222223
+          }
+        }
+      }
+    },
+    "cmp-openreasoning-nemotron-1.5b": {
+      "meta": {
+        "run": "cmp-openreasoning-nemotron-1.5b",
+        "cfg": {
+          "model": "nvidia/OpenReasoning-Nemotron-1.5B",
+          "template_kwargs": {},
+          "adapter": null,
+          "max_new_tokens": 8192,
+          "repetition_penalty": 1.0,
+          "temperature": 0.6,
+          "loop_stop": true,
+          "dtype": "auto",
+          "top_p": 0.95,
+          "system_in_user": true
+        },
+        "cfg_hash": "dd22744c1625",
+        "backend": "vllm",
+        "info": {
+          "dtype": "float16",
+          "gpu": "Tesla T4",
+          "torch": "2.14.0+cu130",
+          "vllm": "0.33.0",
+          "model_class": "vLLM",
+          "model_commit": null,
+          "eos_ids": [],
+          "n_params": null
+        },
+        "harness_version": "1.5",
+        "updated": "2026-11-15 10:29:24",
+        "created": "2026-10-31 16:07:05",
+        "plan": {
+          "ugphysics": [
+            100,
+            200
+          ],
+          "math500": 30
+        },
+        "gpu_seconds": 14733.9
+      },
+      "benchmarks": {
+        "math500": {
+          "n": 210,
+          "n_planned": 210,
+          "complete": true,
+          "rule": {
+            "n": 210,
+            "k": 108,
+            "raw": 0.5142857142857142,
+            "wilson": [
+              0.4470397155694971,
+              0.5810184358846634
+            ],
+            "weighted": 0.5472666666666667,
+            "ci": [
+              0.478195,
+              0.6141733333333332
+            ],
+            "macro": 0.5142857142857143
+          },
+          "generation": {
+            "n": 210,
+            "mean_new_tokens": 5638.6238095238095,
+            "median_new_tokens": 6031.0,
+            "p90_new_tokens": 8192.0,
+            "think_share": 0.9471932952231674,
+            "stop": 0.5714285714285714,
+            "length": 0.41904761904761906,
+            "loop": 0.009523809523809525,
+            "no_final": 0.3761904761904762,
+            "no_boxed": 0.42857142857142855,
+            "tok_per_s": 314.2244902291713,
+            "gpu_hours": 1.0467666666666666
+          }
+        }
+      }
+    }
+  },
+  "head_to_head": [
+    {
+      "n": 210,
+      "a": 0.6354666666666667,
+      "b": 0.7298666666666667,
+      "diff": -0.09440000000000001,
+      "ci": [
+        -0.16468500000000003,
+        -0.025855000000000065
+      ],
+      "a_only": 20,
+      "b_only": 36,
+      "p": 0.04404654610215078,
+      "significant": true,
+      "A": "ft-qwen-v1.2-lora-s647-x50",
+      "B": "qwen35-2b-nothink",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 210,
+      "a": 0.6354666666666667,
+      "b": 0.6297333333333334,
+      "diff": 0.005733333333333337,
+      "ci": [
+        -0.06781333333333332,
+        0.07280999999999993
+      ],
+      "a_only": 27,
+      "b_only": 24,
+      "p": 0.7797679305530743,
+      "significant": false,
+      "A": "ft-qwen-v1.2-lora-s647-x50",
+      "B": "cmp-qwen3-1.7b-megascience",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 210,
+      "a": 0.6354666666666667,
+      "b": 0.7818666666666667,
+      "diff": -0.1464,
+      "ci": [
+        -0.21713666666666664,
+        -0.0796616666666667
+      ],
+      "a_only": 10,
+      "b_only": 39,
+      "p": 3.845911694355664e-05,
+      "significant": true,
+      "A": "ft-qwen-v1.2-lora-s647-x50",
+      "B": "cmp-r1-distill-qwen-1.5b",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 210,
+      "a": 0.6354666666666667,
+      "b": 0.5472666666666667,
+      "diff": 0.0882,
+      "ci": [
+        0.019260000000000003,
+        0.16213499999999997
+      ],
+      "a_only": 39,
+      "b_only": 19,
+      "p": 0.011928139715763175,
+      "significant": true,
+      "A": "ft-qwen-v1.2-lora-s647-x50",
+      "B": "cmp-openreasoning-nemotron-1.5b",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "A better"
+    },
+    {
+      "n": 210,
+      "a": 0.7298666666666667,
+      "b": 0.6297333333333334,
+      "diff": 0.10013333333333334,
+      "ci": [
+        0.04473333333333333,
+        0.16167
+      ],
+      "a_only": 32,
+      "b_only": 13,
+      "p": 0.00660882284228137,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "cmp-qwen3-1.7b-megascience",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "A better"
+    },
+    {
+      "n": 210,
+      "a": 0.7298666666666667,
+      "b": 0.7818666666666667,
+      "diff": -0.052,
+      "ci": [
+        -0.10726999999999999,
+        0.0025433333333332742
+      ],
+      "a_only": 14,
+      "b_only": 27,
+      "p": 0.05958388801809633,
+      "significant": false,
+      "A": "qwen35-2b-nothink",
+      "B": "cmp-r1-distill-qwen-1.5b",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "no significant difference"
+    },
+    {
+      "n": 210,
+      "a": 0.7298666666666667,
+      "b": 0.5472666666666667,
+      "diff": 0.18259999999999998,
+      "ci": [
+        0.11592833333333334,
+        0.24954666666666658
+      ],
+      "a_only": 46,
+      "b_only": 10,
+      "p": 1.2454514146109652e-06,
+      "significant": true,
+      "A": "qwen35-2b-nothink",
+      "B": "cmp-openreasoning-nemotron-1.5b",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "A better"
+    },
+    {
+      "n": 210,
+      "a": 0.6297333333333334,
+      "b": 0.7818666666666667,
+      "diff": -0.15213333333333331,
+      "ci": [
+        -0.21435333333333334,
+        -0.0906616666666667
+      ],
+      "a_only": 9,
+      "b_only": 41,
+      "p": 5.614100093254137e-06,
+      "significant": true,
+      "A": "cmp-qwen3-1.7b-megascience",
+      "B": "cmp-r1-distill-qwen-1.5b",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "B better"
+    },
+    {
+      "n": 210,
+      "a": 0.6297333333333334,
+      "b": 0.5472666666666667,
+      "diff": 0.08246666666666667,
+      "ci": [
+        0.012998333333333337,
+        0.15273833333333334
+      ],
+      "a_only": 36,
+      "b_only": 19,
+      "p": 0.030028945411892494,
+      "significant": true,
+      "A": "cmp-qwen3-1.7b-megascience",
+      "B": "cmp-openreasoning-nemotron-1.5b",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "A better"
+    },
+    {
+      "n": 210,
+      "a": 0.7818666666666667,
+      "b": 0.5472666666666667,
+      "diff": 0.2346,
+      "ci": [
+        0.1639916666666667,
+        0.3057466666666666
+      ],
+      "a_only": 55,
+      "b_only": 6,
+      "p": 5.380614009897755e-11,
+      "significant": true,
+      "A": "cmp-r1-distill-qwen-1.5b",
+      "B": "cmp-openreasoning-nemotron-1.5b",
+      "bench": "math500",
+      "metric": "accuracy",
+      "same_items": true,
+      "verdict": "A better"
+    }
+  ]
+}

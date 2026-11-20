@@ -1,0 +1,38 @@
+{
+  "run": "cmp-r1-distill-qwen-1.5b",
+  "cfg": {
+    "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+    "template_kwargs": {},
+    "adapter": null,
+    "max_new_tokens": 8192,
+    "repetition_penalty": 1.0,
+    "temperature": 0.6,
+    "loop_stop": true,
+    "dtype": "auto",
+    "top_p": 0.95,
+    "system_in_user": true
+  },
+  "cfg_hash": "c84431f59937",
+  "backend": "vllm",
+  "info": {
+    "dtype": "float16",
+    "gpu": "Tesla T4",
+    "torch": "2.14.0+cu130",
+    "vllm": "0.33.0",
+    "model_class": "vLLM",
+    "model_commit": null,
+    "eos_ids": [],
+    "n_params": null
+  },
+  "harness_version": "1.5",
+  "updated": "2026-11-15 09:18:46",
+  "created": "2026-10-31 15:58:11",
+  "plan": {
+    "ugphysics": [
+      100,
+      200
+    ],
+    "math500": 30
+  },
+  "gpu_seconds": 10599.8
+}

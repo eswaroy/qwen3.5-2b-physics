@@ -3,7 +3,7 @@
 # Qwen3.5-2B Physics
 
 **A 2-billion-parameter model fine-tuned on free Google Colab T4 GPUs to solve undergraduate physics problems.**<br>
-On 1,142 UGPhysics questions it never saw during development, it scores **18.9% vs 15.9%** for its base model.
+On 1,142 UGPhysics questions it never saw during development, it scores **18.9%**, first of the five open 1.5–2B models tested, ahead of its base model (15.9%), MegaScience's Qwen3-1.7B (12.6%), DeepSeek-R1-Distill-Qwen-1.5B (9.8%) and OpenReasoning-Nemotron-1.5B (5.0%).
 
 [![Model on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-model-ffcc4d)](https://huggingface.co/eswaroy/qwen3.5-2b-physics)
 [![Base model](https://img.shields.io/badge/base-Qwen3.5--2B-6250d6)](https://huggingface.co/Qwen/Qwen3.5-2B)
@@ -13,6 +13,7 @@ On 1,142 UGPhysics questions it never saw during development, it scores **18.9% 
 
 [**Model**](https://huggingface.co/eswaroy/qwen3.5-2b-physics) ·
 [**Results**](docs/RESULTS.md) ·
+[**Comparison**](docs/RESULTS.md#comparison-with-other-small-open-models) ·
 [**Methods**](docs/METHODS.md) ·
 [**Experiment log**](docs/EXPERIMENTS.md) ·
 [**Reproduce**](docs/REPRODUCE.md)
@@ -23,13 +24,32 @@ On 1,142 UGPhysics questions it never saw during development, it scores **18.9% 
 
 ## Highlights
 
-- **+3.0 points on unseen physics questions.** UGPhysics (English), 1,142 held-out questions: 15.9% → **18.9%** (paired 95% interval +0.3 to +5.7). The same gain appeared first on the development questions (+3.3, p = 0.0035).
-- **Beats both modes of its base model** at the same 4,096-token budget (Qwen3.5-2B thinking mode never finishes within it), and LiquidAI's LFM2.5-1.2B-Thinking.
-- **2.7× shorter answers.** 1,006 tokens on average instead of 2,720; only 7% of answers hit the token limit instead of 49%.
-- **Honest trade-off.** 9.4 points lower than the base model on MATH-500 (63.5% vs 73.0%), mostly on the hardest problems.
+- **#1 of the five small open models tested on unseen physics questions.** Same 1,142 held-out UGPhysics questions, same prompts, same judge: its lead over every other model is statistically significant (all paired 95% intervals exclude zero).
+- **+3.0 points over its own base model** (15.9% → 18.9%, interval +0.3 to +5.7). The same gain appeared first on the development questions (+3.3, p = 0.0035).
+- **+6.3 points over MegaScience's own Qwen3-1.7B fine-tune**, trained on the same family of science data (118 questions won, 46 lost).
+- **Beats reasoning models given twice the budget.** DeepSeek-R1-Distill-Qwen-1.5B and OpenReasoning-Nemotron-1.5B got 8,192 tokens and sampling; this model wins by +9.1 and +13.9 points with **6–8× fewer tokens**.
+- **2.7× shorter answers than its base model.** 1,006 tokens on average instead of 2,720; only 7% of answers hit the token limit instead of 49%.
+- **Honest trade-off.** Weaker at hard maths: MATH-500 63.5%, vs 73.0% for the base model and 78.2% for R1-Distill.
 - **Built for free.** Data building, training (about 4.5 GPU hours on one T4) and every evaluation ran on free Colab notebooks.
 
-## Results
+## Leaderboard: open models of 1.5–2B parameters
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/compare_dark.png">
+  <img alt="Horizontal bar charts. UGPhysics held-out test: this model 18.9%, Qwen3.5-2B 15.9%, MegaScience Qwen3-1.7B 12.6%, DeepSeek-R1-Distill-Qwen-1.5B 9.8%, OpenReasoning-Nemotron-1.5B 5.0%. MATH-500: 63.5%, 73.0%, 63.0%, 78.2%, 54.7%." src="docs/assets/compare_light.png" width="860">
+</picture>
+
+| # | Model | Decoding | UGPhysics held-out | This model ahead by [95% CI] | MATH-500 |
+|---|---|---|---|---|---|
+| 1 | **This model** (Qwen3.5-2B + LoRA) | greedy, 4,096 tokens | **18.9%** | – | 63.5% |
+| 2 | [Qwen3.5-2B](https://huggingface.co/Qwen/Qwen3.5-2B), non-thinking | greedy, 4,096 tokens | 15.9% | +3.0 [+0.3, +5.7] | 73.0% |
+| 3 | [MegaScience Qwen3-1.7B](https://huggingface.co/MegaScience/Qwen3-1.7B-MegaScience) | greedy, 4,096 tokens | 12.6% | +6.3 [+3.7, +8.9] | 63.0% |
+| 4 | [DeepSeek-R1-Distill-Qwen-1.5B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B) | sampled, 8,192 tokens | 9.8% | +9.1 [+6.4, +11.8] | **78.2%** |
+| 5 | [OpenReasoning-Nemotron-1.5B](https://huggingface.co/nvidia/OpenReasoning-Nemotron-1.5B) | sampled, 8,192 tokens | 5.0% | +13.9 [+11.3, +16.6] | 54.7% |
+
+Every model answered the same 1,142 held-out UGPhysics questions and 210 MATH-500 problems with the official prompt and rule judge, using its developer's recommended decoding; the reasoning models got twice our token budget. Even so, they never reached a final answer on 50% (R1-Distill) and 83% (Nemotron) of the physics questions, so they may do better with far longer budgets than a free T4 allows. Qwen3-1.7B was planned but not finished (too slow on the free T4), so no claim is made about it. Per-subject tables, answer lengths and caveats: [docs/RESULTS.md](docs/RESULTS.md#comparison-with-other-small-open-models).
+
+## Results against the base model
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/results_dark.png">
@@ -100,6 +120,7 @@ The model is the last of several experiments; the full story with every number i
 | 3 | Qwen3.5-2B (non-thinking) + short solutions, full strength | 14.5% → 16.6% | Fixed the rambling (52% → 2% hit the limit) but lost 15 points of maths. |
 | 4 | Same adapter at half strength | 14.5% → **17.9%** | Kept the physics gain and reduced the maths loss. |
 | 5 | Final test, held-out questions | 15.9% → **18.9%** | The gain is real on questions never used for any decision. |
+| 6 | Four other small open models, same held-out questions | 5.0% – 15.9% | This model is first; reasoning distills run out of tokens on physics. |
 
 ## Repository layout
 
@@ -111,9 +132,10 @@ The model is the last of several experiments; the full story with every number i
 │   └── physself.py       #   self-distillation data (experiment 2)
 ├── notebooks/            # Colab notebooks, one per stage (see notebooks/README.md)
 ├── results/              # evaluation reports, summary.json files, every generated answer (gzip)
+│   └── compare/          #   the comparison with four other small models
 ├── training/             # training configs, loss logs and sampled answers
 ├── data/                 # dataset build reports and the v1.2 training data (gzip, CC BY-NC-SA 4.0)
-├── tools/                # make_figures.py: the figures in this README
+├── tools/                # make_figures.py, make_compare_figure.py: the figures in this README
 └── docs/                 # results, methods, experiment log, reproduction guide, model card, figures
 ```
 
@@ -127,7 +149,7 @@ Everything runs in Google Colab on a free T4: copy `src/*.py` and `notebooks/*.i
 - Weaker than the base model on hard maths (MATH-500 Level 5: 49% → 26%).
 - About 7% of answers still run past 4,096 tokens.
 - English only, text only (Qwen3.5-2B's image encoder is not included), evaluated only with greedy decoding.
-- Compared with two model families only. Other small models (for example Qwen3-1.7B, DeepSeek-R1-Distill-Qwen-1.5B, or MegaScience's own fine-tunes) were not evaluated with this harness, so no claim is made about them.
+- Compared with five open models (above). Qwen3-1.7B in thinking mode was not finished, and other small models (Gemma, SmolLM, Phi) were not tested, so no claim is made about them. The reasoning models were limited to 8,192 tokens.
 
 ## License
 

@@ -1,0 +1,36 @@
+{
+  "run": "cmp-qwen3-1.7b-megascience",
+  "cfg": {
+    "model": "MegaScience/Qwen3-1.7B-MegaScience",
+    "template_kwargs": {},
+    "adapter": null,
+    "max_new_tokens": 4096,
+    "repetition_penalty": 1.0,
+    "temperature": 0.0,
+    "loop_stop": true,
+    "dtype": "auto"
+  },
+  "cfg_hash": "67cb8c0e068f",
+  "backend": "vllm",
+  "info": {
+    "dtype": "float16",
+    "gpu": "Tesla T4",
+    "torch": "2.13.0+cu130",
+    "vllm": "0.32.0",
+    "model_class": "vLLM",
+    "model_commit": null,
+    "eos_ids": [],
+    "n_params": null
+  },
+  "harness_version": "1.5",
+  "updated": "2026-10-31 18:59:15",
+  "created": "2026-10-31 16:12:15",
+  "plan": {
+    "ugphysics": [
+      100,
+      200
+    ],
+    "math500": 30
+  },
+  "gpu_seconds": 10018.7
+}

@@ -39,7 +39,7 @@ import time
 import types
 import warnings
 
-VERSION = "1.4"
+VERSION = "1.5"
 
 # --------------------------------------------------------------------------------------
 # Configuration
@@ -567,12 +567,35 @@ def resolve_run(a):
     cfg["temperature"] = a.temperature
     cfg["loop_stop"] = not a.no_loop_stop
     cfg["dtype"] = a.dtype
+    # new in 1.5 (only stored when used, so the settings hash of older runs does not change)
+    if getattr(a, "top_p", None):
+        cfg["top_p"] = a.top_p
+    if getattr(a, "top_k", None):
+        cfg["top_k"] = a.top_k
+    if getattr(a, "system_in_user", False):
+        cfg["system_in_user"] = True
     return cfg
 
 
 def cfg_hash(cfg):
     keys = ["model", "adapter", "template_kwargs", "max_new_tokens", "repetition_penalty", "temperature", "loop_stop"]
-    return sha1(json.dumps({k: cfg.get(k) for k in keys}, sort_keys=True))[:12]
+    d = {k: cfg.get(k) for k in keys}
+    for k in ("top_p", "top_k", "system_in_user"):   # added in 1.5; absent keys keep old hashes valid
+        if cfg.get(k):
+            d[k] = cfg[k]
+    return sha1(json.dumps(d, sort_keys=True))[:12]
+
+
+def prepare_messages(messages, cfg):
+    """Some models (DeepSeek-R1 distills, OpenReasoning-Nemotron) are meant to get every instruction in the user
+    turn. With system_in_user the system text is put in front of the user message instead; the words are the same."""
+    if not cfg.get("system_in_user"):
+        return messages
+    sys_txt = "\n\n".join(m["content"] for m in messages if m["role"] == "system")
+    out = [dict(m) for m in messages if m["role"] != "system"]
+    if sys_txt and out and out[0]["role"] == "user":
+        out[0]["content"] = sys_txt + "\n\n" + out[0]["content"]
+    return out
 
 
 class HFBackend:
@@ -647,8 +670,8 @@ class HFBackend:
         }
 
     def render(self, messages):
-        return self.tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True,
-                                            **self.cfg.get("template_kwargs", {}))
+        return self.tok.apply_chat_template(prepare_messages(messages, self.cfg), tokenize=False,
+                                            add_generation_prompt=True, **self.cfg.get("template_kwargs", {}))
 
     def encode_len(self, text):
         return len(self.tok(text, add_special_tokens=False)["input_ids"])
@@ -735,6 +758,91 @@ class HFBackend:
         self.torch.cuda.empty_cache()
 
 
+class VLLMBackend:
+    """vLLM offline engine (new in 1.5): continuous batching, several times faster than transformers on a T4.
+    Same prompts, chat templates, budgets and grading as the transformers backend. Repetition loops are labelled
+    after generation (finish reason 'loop') instead of being stopped early; either way such answers are wrong."""
+
+    def __init__(self, cfg, max_model_len=None, gpu_memory_utilization=0.90):
+        import torch
+        import vllm
+        from vllm import LLM, SamplingParams
+        if cfg.get("adapter"):
+            raise SystemExit("--backend vllm does not load adapters here; use --backend hf for adapter runs.")
+        if not torch.cuda.is_available():
+            raise SystemExit("No GPU. In Colab: Runtime > Change runtime type > T4 GPU.")
+        self.torch, self.cfg, self.SP = torch, cfg, SamplingParams
+        name = cfg.get("dtype") or "auto"
+        if name == "auto":
+            name = "bfloat16" if torch.cuda.get_device_capability(0)[0] >= 8 else "float16"
+        self.max_model_len = max_model_len or (cfg["max_new_tokens"] + 2048)
+        log("loading with vLLM:", cfg["model"], "| dtype", name, "| max_model_len", self.max_model_len)
+        self.llm = LLM(model=cfg["model"], dtype=name, max_model_len=self.max_model_len, seed=SEED,
+                       gpu_memory_utilization=gpu_memory_utilization, enable_prefix_caching=False)
+        self.tok = self.llm.get_tokenizer()
+        keep = {"<think>", "</think>"}
+        self.strip_tokens = [t for t in set(getattr(self.tok, "all_special_tokens", []) or []) if t and t not in keep]
+        self.strip_tokens += [t for t in ("<|im_end|>", "<|endoftext|>", "<\uff5cend\u2581of\u2581sentence\uff5c>")
+                              if t not in self.strip_tokens]
+        self.info = {"dtype": name, "gpu": torch.cuda.get_device_name(0), "torch": torch.__version__,
+                     "vllm": getattr(vllm, "__version__", "?"), "model_class": "vLLM", "model_commit": None,
+                     "eos_ids": [], "n_params": None}
+
+    def render(self, messages):
+        return self.tok.apply_chat_template(prepare_messages(messages, self.cfg), tokenize=False,
+                                            add_generation_prompt=True, **self.cfg.get("template_kwargs", {}))
+
+    def encode_len(self, text):
+        return len(self.tok(text, add_special_tokens=False)["input_ids"])
+
+    def count(self, text):
+        return self.encode_len(text) if text else 0
+
+    def generate(self, texts, max_new_tokens=None, loop_stop=None):
+        cfg = self.cfg
+        max_new = max_new_tokens or cfg["max_new_tokens"]
+        use_loop = cfg.get("loop_stop", True) if loop_stop is None else loop_stop
+        prompts, params = [], []
+        for t in texts:
+            ids = self.tok(t, add_special_tokens=False)["input_ids"]   # the template already holds BOS if needed
+            prompts.append({"prompt_token_ids": ids})
+            kw = dict(max_tokens=min(max_new, max(16, self.max_model_len - len(ids))),
+                      repetition_penalty=cfg.get("repetition_penalty") or 1.0,
+                      skip_special_tokens=False, spaces_between_special_tokens=False,
+                      seed=int(sha1(cfg.get("_run", "") + t)[:8], 16))   # per-prompt seed: reruns reproduce samples
+            if cfg.get("temperature", 0) and cfg["temperature"] > 0:
+                kw.update(temperature=cfg["temperature"])
+                if cfg.get("top_p"):
+                    kw["top_p"] = cfg["top_p"]
+                if cfg.get("top_k"):
+                    kw["top_k"] = cfg["top_k"]
+            else:
+                kw["temperature"] = 0.0
+            params.append(self.SP(**kw))
+        outs = self.llm.generate(prompts, params, use_tqdm=False)
+        res = []
+        for o in outs:
+            c = o.outputs[0]
+            ids = list(c.token_ids)
+            reason = "stop" if c.finish_reason == "stop" else "length"
+            if reason == "length" and use_loop and detect_loop(ids[-512:]):
+                reason = "loop"
+            text = c.text
+            for t in self.strip_tokens:
+                text = text.replace(t, "")
+            res.append({"text": text, "ids": ids, "n_new_tokens": len(ids), "finish_reason": reason,
+                        "n_prompt_tokens": len(o.prompt_token_ids or [])})
+        return res
+
+    def is_oom(self, e):
+        return "out of memory" in str(e).lower()
+
+    def free(self):
+        import gc
+        gc.collect()
+        self.torch.cuda.empty_cache()
+
+
 class MockBackend:
     """No GPU, no model: fabricates answers so the whole pipeline can be dry-run. Never use for results."""
 
@@ -747,6 +855,7 @@ class MockBackend:
         self.thinks = self.opens or "thinking" in cfg["model"].lower()
 
     def render(self, messages):
+        messages = prepare_messages(messages, self.cfg)
         return "\n".join("<|im_start|>%s\n%s<|im_end|>" % (m["role"], m["content"]) for m in messages) + \
             "\n<|im_start|>assistant\n" + ("<think>\n" if self.opens else "")
 
@@ -855,6 +964,8 @@ def cmd_generate(a):
         for b, (_, todo, _) in todo_all.items():
             for it in todo:
                 lookup[backend.render(it["messages"])] = it
+    elif a.backend == "vllm":
+        backend = VLLMBackend(cfg, a.max_model_len)
     else:
         backend = HFBackend(cfg)
     if not a.smoke:
@@ -882,7 +993,7 @@ def cmd_generate(a):
         opens = [t.rstrip().endswith("<think>") for t in texts]
         batching = a.batching
         if batching == "auto":
-            if "padding" not in meta and a.backend != "mock" and len(texts) >= 4:
+            if "padding" not in meta and a.backend == "hf" and len(texts) >= 4:
                 log("checking that padded batches reproduce single-prompt outputs ...")
                 meta["padding"] = padding_check(backend, texts, lengths)
                 log("  ", json.dumps(meta["padding"]))
@@ -1527,7 +1638,8 @@ def cmd_report(a):
     runs = list_runs(wd, a.run)
     out_dir = P(wd, "results")
     os.makedirs(P(out_dir, "tables"), exist_ok=True)
-    data = {run: {b: load_run_bench(wd, run, b, a.judge_model) for b in BENCHES} for run in runs}
+    only = [b.strip() for b in (getattr(a, "benchmarks", "") or "").split(",") if b.strip()] or list(BENCHES)
+    data = {run: {b: (load_run_bench(wd, run, b, a.judge_model) if b in only else None) for b in BENCHES} for run in runs}
     runs = [r for r in runs if any(data[r].values())]
     if not runs:
         raise SystemExit("Nothing graded yet. Run generate and grade first.")
@@ -1539,12 +1651,14 @@ def cmd_report(a):
     for run in runs:
         m = next(d["meta"] for d in data[run].values() if d)
         c, info = m.get("cfg", {}), m.get("info", {})
+        samp = "greedy" if not c.get("temperature") else "T=%s%s%s" % (
+            c["temperature"], ", top-p %s" % c["top_p"] if c.get("top_p") else "", ", top-k %s" % c["top_k"] if c.get("top_k") else "")
         rows.append([run, c.get("model"), json.dumps(c.get("template_kwargs", {})), c.get("max_new_tokens"),
-                     c.get("repetition_penalty"), info.get("dtype"), info.get("gpu"),
-                     (info.get("model_commit") or "")[:8], m.get("padding", {}).get("safe", "n/a")])
+                     c.get("repetition_penalty"), samp, m.get("backend", "hf"), info.get("dtype"), info.get("gpu"),
+                     m.get("padding", {}).get("safe", "n/a")])
         js["runs"][run] = {"meta": m, "benchmarks": {}}
-    md.append(md_table(["run", "model", "chat-template options", "max new tokens", "repetition penalty", "dtype",
-                        "GPU", "model commit", "padding-safe"], rows))
+    md.append(md_table(["run", "model", "chat-template options", "max new tokens", "repetition penalty", "decoding",
+                        "backend", "dtype", "GPU", "padding-safe"], rows))
     keys = ("max_new_tokens", "repetition_penalty", "temperature", "loop_stop")
     if len({tuple(js["runs"][r]["meta"].get("cfg", {}).get(k) for k in keys) for r in runs}) > 1:
         md.append("\n**WARNING: these runs do not share the same decoding settings (see the table). "
@@ -1831,6 +1945,13 @@ def cmd_selftest(a):
     for (p, g, w_rule, w_units), r in zip(cases, res):
         check("%-48s vs %-28s" % (p[:48], g[:28]), (r["rule"], r["rule_units"]), (w_rule, w_units))
     log("3. Thinking split, loop detector, statistics")
+    _m = [{"role": "system", "content": "S"}, {"role": "user", "content": "U"}]
+    check("system into user", prepare_messages(_m, {"system_in_user": True}), [{"role": "user", "content": "S\n\nU"}])
+    check("system kept", prepare_messages(_m, {}), _m)
+    check("old settings hash unchanged", cfg_hash({"model": "m", "adapter": None, "template_kwargs": {}, "max_new_tokens": 4096,
+          "repetition_penalty": 1.0, "temperature": 0.0, "loop_stop": True}),
+          sha1(json.dumps({"model": "m", "adapter": None, "template_kwargs": {}, "max_new_tokens": 4096,
+                           "repetition_penalty": 1.0, "temperature": 0.0, "loop_stop": True}, sort_keys=True))[:12])
     check("per-group range", parse_per_group("ugphysics=100:200,math500=30"), {"ugphysics": [100, 200], "math500": 30})
     _its = [{"rank": k} for k in range(250)]
     check("planned range", (len(planned(_its, [100, 200])), len(planned(_its, 100)), len(planned(_its, 0))), (100, 100, 250))
@@ -1887,10 +2008,15 @@ def main(argv=None):
     p.add_argument("--repetition-penalty", type=float, default=GEN_DEFAULTS["repetition_penalty"])
     p.add_argument("--temperature", type=float, default=GEN_DEFAULTS["temperature"])
     p.add_argument("--no-loop-stop", action="store_true")
+    p.add_argument("--top-p", type=float, default=0.0, help="only with --temperature > 0")
+    p.add_argument("--top-k", type=int, default=0, help="only with --temperature > 0")
+    p.add_argument("--system-in-user", action="store_true",
+                   help="put the system prompt's text in front of the user message (for models that ask for that)")
+    p.add_argument("--max-model-len", type=int, default=0, help="vLLM context length (default: budget + 2,048)")
     p.add_argument("--batch-size", type=int, default=16)
     p.add_argument("--batching", choices=["auto", "padded", "exact"], default="auto")
     p.add_argument("--dtype", default="auto", choices=["auto", "float16", "bfloat16", "float32"])
-    p.add_argument("--backend", choices=["hf", "mock"], default="hf")
+    p.add_argument("--backend", choices=["hf", "vllm", "mock"], default="hf")
     p.add_argument("--smoke", action="store_true", help="few items, prints prompt/answer/speed, saves nothing permanent")
     p.add_argument("--max-items", type=int, default=0)
     p.add_argument("--time-budget-min", type=float, default=0)
@@ -1919,6 +2045,7 @@ def main(argv=None):
 
     p = common(sub.add_parser("report"))
     p.add_argument("--run")
+    p.add_argument("--benchmarks", default="", help="comma-separated; default all (new in 1.5)")
     p.add_argument("--judge-model", help="only use verdicts from this judge model")
     p.set_defaults(fn=cmd_report)
 

@@ -88,4 +88,4 @@ The adapter was merged into Qwen3.5-2B in float32 and saved in **float16**, the 
 
 - **Fix the maths loss** by training on the model's own correct long answers for hard problems, or by mixing longer solutions into the data.
 - **More physics skill** needs better solutions than the short textbook ones: for example, verified long-form solutions from a stronger teacher.
-- **Compare with other small models** (Qwen3-1.7B, DeepSeek-R1-Distill-Qwen-1.5B, MegaScience's Qwen3-1.7B fine-tune) in the same harness. A fresh held-out slice is still available: UGPhysics questions ranked 200 and above have never been used.
+- **Compare with other small models** (done): on the held-out test this model leads Qwen3.5-2B, MegaScience's Qwen3-1.7B, DeepSeek-R1-Distill-Qwen-1.5B and OpenReasoning-Nemotron-1.5B; see [RESULTS.md](RESULTS.md#comparison-with-other-small-open-models). Qwen3-1.7B (thinking) is still open. A fresh held-out slice is still available: UGPhysics questions ranked 200 and above have never been used.

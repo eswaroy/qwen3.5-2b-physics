@@ -11,3 +11,5 @@ Run them in Google Colab on a T4 GPU, with every notebook and every file from [`
 | 4 | [`PhysicsFinalTest.ipynb`](PhysicsFinalTest.ipynb) | Held-out final test and the bigger MATH-500 check |
 | 5 | [`PhysicsPublish.ipynb`](PhysicsPublish.ipynb) | Merge, check, write the model card, upload to Hugging Face |
 | 6 | [`PhysicsGitHub.ipynb`](PhysicsGitHub.ipynb) | Collect results, logs and data, and push this repository |
+| 7 | [`PhysicsCompare.ipynb`](PhysicsCompare.ipynb) | Run four other small open models on the same questions (vLLM) and build the comparison reports |
+| 8 | [`PhysicsUpdate.ipynb`](PhysicsUpdate.ipynb) | Put the comparison on Hugging Face and GitHub (use it instead of `PhysicsGitHub.ipynb` for later updates) |

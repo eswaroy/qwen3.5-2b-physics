@@ -7,6 +7,7 @@ language:
 - en
 tags:
 - physics
+- ugphysics
 - science
 - qwen3.5
 - lora
@@ -19,7 +20,11 @@ datasets:
 
 A physics fine-tune of [Qwen3.5-2B](https://huggingface.co/Qwen/Qwen3.5-2B), trained on a free Google Colab T4. It solves undergraduate physics problems with short step-by-step reasoning and a boxed final answer.
 
-On **held-out UGPhysics questions** it scores **18.9% vs 15.9%** for the base model in the same (non-thinking) mode, with answers about 2.7× shorter. It is weaker than the base model at hard competition maths (see [Limitations](#limitations)).
+On **1,142 held-out UGPhysics questions** it scores **18.9%**, the best of the five open 1.5–2B models tested in the same harness: ahead of base Qwen3.5-2B (15.9%), MegaScience's Qwen3-1.7B (12.6%), DeepSeek-R1-Distill-Qwen-1.5B (9.8%) and OpenReasoning-Nemotron-1.5B (5.0%), each by a statistically significant margin. Its answers are 2.7× shorter than the base model's. It is weaker at hard competition maths (see [Limitations](#limitations)).
+
+![Bar charts. UGPhysics held-out test: this model 18.9%, Qwen3.5-2B 15.9%, MegaScience Qwen3-1.7B 12.6%, DeepSeek-R1-Distill-Qwen-1.5B 9.8%, OpenReasoning-Nemotron-1.5B 5.0%. MATH-500: 63.5%, 73.0%, 63.0%, 78.2%, 54.7%.](assets/compare_card.png)
+
+Code, every generated answer and the full reports: [GitHub](https://github.com/eswaroy/qwen3.5-2b-physics).
 
 ## Results
 
@@ -35,6 +40,22 @@ UGPhysics English, the questions ranked 100 to 199 in each subject: 12 subjects,
 | **this model** | **18.9% [16.3, 21.7]** | 1,006 tokens | 6.9% |
 
 Paired difference: **+3.0 points** [+0.3, +5.7] (paired bootstrap 95% interval). This model is right on 102 questions the base model gets wrong and wrong on 75 that the base model gets right (exact McNemar p = 0.050).
+
+### Comparison with other small open models
+
+The same 1,142 held-out questions and 210 MATH-500 problems, the same prompts and the same rule judge for every model. Each model used its developer's recommended decoding; the two reasoning models were sampled (temperature 0.6, top-p 0.95) and got **8,192 new tokens, twice this model's budget**.
+
+| # | model | decoding | UGPhysics held-out [95% CI] | this model ahead by [95% CI] | wins / losses | MATH-500 |
+|---|---|---|---|---|---|---|
+| 1 | **this model** | greedy, 4,096 tokens | **18.9%** [16.3, 21.7] | – | – | 63.5% |
+| 2 | [Qwen/Qwen3.5-2B](https://huggingface.co/Qwen/Qwen3.5-2B), non-thinking | greedy, 4,096 tokens | 15.9% [13.6, 18.5] | +3.0 [+0.3, +5.7] | 102 / 75 | 73.0% |
+| 3 | [MegaScience/Qwen3-1.7B-MegaScience](https://huggingface.co/MegaScience/Qwen3-1.7B-MegaScience) | greedy, 4,096 tokens | 12.6% [10.5, 15.0] | +6.3 [+3.7, +8.9] | 118 / 46 | 63.0% |
+| 4 | [deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B) | sampled, 8,192 tokens | 9.8% [7.8, 11.9] | +9.1 [+6.4, +11.8] | 143 / 39 | **78.2%** |
+| 5 | [nvidia/OpenReasoning-Nemotron-1.5B](https://huggingface.co/nvidia/OpenReasoning-Nemotron-1.5B) | sampled, 8,192 tokens | 5.0% [3.5, 6.5] | +13.9 [+11.3, +16.6] | 174 / 19 | 54.7% |
+
+"Wins / losses": questions only this model got right vs questions only the other model got right (exact McNemar p = 0.050 against the base model and p < 0.001 against the other three). Against the three outside models, this model is ahead in 10 of 12 physics subjects and level in one.
+
+The reasoning models think at great length on undergraduate physics: even with 8,192 tokens, R1-Distill never reached a final answer on 50% of the questions and Nemotron on 83%, while this model used 1,006 tokens on average and finished 92% of its answers. They may score higher with much longer budgets, which was not tested. On MATH-500 the order changes: R1-Distill leads, and this model is level with MegaScience's model. Qwen3-1.7B (thinking mode) was planned but not finished, so no claim is made about it. The results of this model and the base model come from transformers, the others from vLLM, with identical prompts and grading.
 
 ### Development questions (used to choose the checkpoint and the adapter strength)
 
@@ -62,7 +83,7 @@ On the 1,008 questions both answered, this model leads the non-thinking base mod
 
 The drop (−9.4 points, McNemar p = 0.044) is mostly on the hardest problems (Level 5: 49% → 26%).
 
-Full reports: [`eval/summary_final_test.md`](eval/summary_final_test.md) and [`eval/summary_dev_all.md`](eval/summary_dev_all.md).
+Full reports: [`eval/summary_final_test.md`](eval/summary_final_test.md), [`eval/summary_dev_all.md`](eval/summary_dev_all.md), and for the comparison [`eval/compare_leaderboard.md`](eval/compare_leaderboard.md), [`eval/summary_compare_ugphysics.md`](eval/summary_compare_ugphysics.md) and [`eval/summary_compare_math500.md`](eval/summary_compare_math500.md).
 
 ## How to use
 
@@ -74,7 +95,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 repo = "eswaroy/qwen3.5-2b-physics"
 tok = AutoTokenizer.from_pretrained(repo)
-model = AutoModelForCausalLM.from_pretrained(repo, dtype=torch.bfloat16, device_map="auto")
+model = AutoModelForCausalLM.from_pretrained(repo, dtype=torch.float16, device_map="auto")
 
 messages = [
     {"role": "system", "content": "Please reason step by step, and put your final answer within \\boxed{}."},
@@ -87,7 +108,15 @@ out = model.generate(**inputs, max_new_tokens=4096, do_sample=False)
 print(tok.decode(out[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True))
 ```
 
-On a GPU without bf16 support (such as a T4), use `dtype=torch.float16`. Qwen3.5 needs a recent `transformers` (`pip install -U transformers`).
+The weights are stored in float16, the precision used for every evaluation. Loading them as bfloat16 also works but rounds part of the fine-tune's small weight changes away, so answers can differ slightly from the reported results. Qwen3.5 needs a recent `transformers` (`pip install -U transformers`).
+
+**Adapter only:** the half-strength LoRA adapter is in [`adapter/`](adapter). To apply it to the original model with PEFT:
+
+```python
+from peft import PeftModel
+base = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3.5-2B", dtype=torch.float16, device_map="auto")
+model = PeftModel.from_pretrained(base, "eswaroy/qwen3.5-2b-physics", subfolder="adapter").merge_and_unload()
+```
 
 ## Training
 
@@ -100,7 +129,8 @@ On a GPU without bf16 support (such as a T4), use `dtype=torch.float16`. Qwen3.5
 ## Limitations
 
 - About 4 of every 5 undergraduate physics problems are still answered wrongly. Always check the answers.
-- Worse than the base model on hard maths (see MATH-500 above).
+- Worse than the base model on hard maths (see MATH-500 above), and well behind DeepSeek-R1-Distill-Qwen-1.5B there (63.5% vs 78.2%). Use a reasoning model for competition maths.
+- Compared with five open models only; Qwen3-1.7B in thinking mode and other families (Gemma, SmolLM, Phi) were not tested.
 - About 7% of answers still run past 4,096 tokens.
 - English only. Evaluated only with greedy decoding.
 

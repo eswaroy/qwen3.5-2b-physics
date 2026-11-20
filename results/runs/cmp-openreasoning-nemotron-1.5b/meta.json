@@ -1,0 +1,38 @@
+{
+  "run": "cmp-openreasoning-nemotron-1.5b",
+  "cfg": {
+    "model": "nvidia/OpenReasoning-Nemotron-1.5B",
+    "template_kwargs": {},
+    "adapter": null,
+    "max_new_tokens": 8192,
+    "repetition_penalty": 1.0,
+    "temperature": 0.6,
+    "loop_stop": true,
+    "dtype": "auto",
+    "top_p": 0.95,
+    "system_in_user": true
+  },
+  "cfg_hash": "dd22744c1625",
+  "backend": "vllm",
+  "info": {
+    "dtype": "float16",
+    "gpu": "Tesla T4",
+    "torch": "2.14.0+cu130",
+    "vllm": "0.33.0",
+    "model_class": "vLLM",
+    "model_commit": null,
+    "eos_ids": [],
+    "n_params": null
+  },
+  "harness_version": "1.5",
+  "updated": "2026-11-15 10:29:24",
+  "created": "2026-10-31 16:07:05",
+  "plan": {
+    "ugphysics": [
+      100,
+      200
+    ],
+    "math500": 30
+  },
+  "gpu_seconds": 14733.9
+}

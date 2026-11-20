@@ -69,6 +69,73 @@ UGPhysics English questions ranked 100 to 199 inside each subject (ranks come fr
 
 The base model loses about half its answers to the token limit; this model finishes more than nine in ten.
 
+<!-- compare:start -->
+## Comparison with other small open models
+
+Four other open models of 1.5 to 2B parameters answered **the same 1,142 held-out questions** and the same 210 MATH-500 problems, with the same prompts and the same rule judge ([`notebooks/PhysicsCompare.ipynb`](../notebooks/PhysicsCompare.ipynb)). Reports: [`results/compare/`](../results/compare).
+
+| # | Model | Size | Decoding | UGPhysics held-out [95% CI] | This model ahead by [95% CI] | Wins / losses | p | MATH-500 [95% CI] |
+|---|---|---|---|---|---|---|---|---|
+| 1 | **This model** | 2B | greedy, 4,096 tokens | **18.9%** [16.3, 21.7] | – | – | – | 63.5% [56.6, 69.9] |
+| 2 | Qwen/Qwen3.5-2B, non-thinking (base) | 2B | greedy, 4,096 tokens | 15.9% [13.6, 18.5] | +3.0 [+0.3, +5.7] | 102 / 75 | 0.050 | 73.0% [67.3, 78.7] |
+| 3 | MegaScience/Qwen3-1.7B-MegaScience | 1.7B | greedy, 4,096 tokens | 12.6% [10.5, 15.0] | +6.3 [+3.7, +8.9] | 118 / 46 | < 0.001 | 63.0% [56.5, 69.1] |
+| 4 | deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B | 1.5B | sampled, 8,192 tokens | 9.8% [7.8, 11.9] | +9.1 [+6.4, +11.8] | 143 / 39 | < 0.001 | **78.2%** [73.0, 83.7] |
+| 5 | nvidia/OpenReasoning-Nemotron-1.5B | 1.5B | sampled, 8,192 tokens | 5.0% [3.5, 6.5] | +13.9 [+11.3, +16.6] | 174 / 19 | < 0.001 | 54.7% [47.8, 61.4] |
+
+"Wins / losses": questions only this model answered correctly vs questions only the other model answered correctly; p is the exact McNemar test. Every paired interval excludes zero, so on held-out UGPhysics this model is ahead of all four.
+
+**How each model was run.** Every model got its developer's recommended settings. MegaScience's model is a non-thinking fine-tune and was run like ours (greedy, 4,096 new tokens). The two reasoning models were sampled as their developers recommend (temperature 0.6, top-p 0.95, one sample per question with a fixed seed, instructions in the user turn) because greedy decoding makes them loop, and they got **8,192 new tokens, twice our budget**, as the UGPhysics paper gives o1-style models.
+
+### By subject (%)
+
+| Subject | Questions | This model | Qwen3.5-2B | MegaScience 1.7B | R1-Distill 1.5B | Nemotron 1.5B |
+|---|---|---|---|---|---|---|
+| AtomicPhysics | 100 | 26.0 | **27.0** | 20.0 | 10.0 | 10.0 |
+| ClassicalElectromagnetism | 100 | 15.0 | **16.0** | 10.0 | 7.0 | 3.0 |
+| ClassicalMechanics | 100 | **26.0** | 16.0 | 11.0 | 18.0 | 6.0 |
+| Electrodynamics | 84 | **17.9** | 10.7 | 9.5 | 7.1 | 4.8 |
+| QuantumMechanics | 100 | **18.0** | 11.0 | 14.0 | 10.0 | 3.0 |
+| Relativity | 100 | 20.0 | **21.0** | 3.0 | 7.0 | 1.0 |
+| SemiconductorPhysics | 86 | **31.4** | 23.3 | 24.4 | 11.6 | 5.8 |
+| Solid-StatePhysics | 72 | **11.1** | **11.1** | 8.3 | 5.6 | 4.2 |
+| StatisticalMechanics | 100 | 6.0 | **8.0** | 6.0 | 4.0 | 3.0 |
+| TheoreticalMechanics | 100 | **12.0** | 8.0 | 10.0 | 5.0 | 1.0 |
+| Thermodynamics | 100 | **20.0** | 19.0 | 11.0 | 8.0 | 7.0 |
+| WaveOptics | 100 | 13.0 | **16.0** | 14.0 | 13.0 | 5.0 |
+
+Against the three outside models, this model is ahead in 10 of 12 subjects, level in StatisticalMechanics and behind only in WaveOptics (MegaScience 14.0 vs 13.0).
+
+| Reasoning skill | Questions | This model | Qwen3.5-2B | MegaScience 1.7B | R1-Distill 1.5B | Nemotron 1.5B |
+|---|---|---|---|---|---|---|
+| Knowledge recall | 105 | **41.9** | 32.4 | 34.3 | 20.0 | 19.0 |
+| Laws application | 412 | **21.6** | 20.9 | 14.1 | 12.4 | 5.1 |
+| Math derivation | 468 | **9.4** | 6.8 | 5.3 | 3.8 | 1.7 |
+| Practical application | 117 | **20.5** | 18.8 | 6.8 | 6.8 | 0.0 |
+
+### How the answers end (UGPhysics held-out)
+
+| Model | Mean new tokens | Finished normally | Hit the token limit | Never finished thinking |
+|---|---|---|---|---|
+| **This model** | **1,006** | **91.7%** | 6.9% | – |
+| Qwen3.5-2B (base) | 2,720 | 48.9% | 48.9% | – |
+| MegaScience 1.7B | 1,515 | 86.0% | 13.6% | 0.4% |
+| R1-Distill 1.5B | 6,460 | 47.4% | 52.4% (of 8,192) | 50.2% |
+| Nemotron 1.5B | 7,762 | 15.7% | 83.5% (of 8,192) | 82.8% |
+
+The reasoning models think for a very long time on undergraduate physics: even with 8,192 tokens, R1-Distill never reached a final answer on half of the questions and Nemotron on more than four in five. They would probably score higher with 16K to 32K tokens, which was not tested (at 8,192 tokens they already needed 7.2 and 9.2 T4-hours for these questions). The fair summary is: **at the budget a free T4 can afford, this model gives the most correct physics answers, using 6 to 8 times fewer tokens than the reasoning models.**
+
+### MATH-500
+
+On maths the order changes: R1-Distill-Qwen-1.5B leads (78.2%), followed by the base model (73.0%). This model (63.5%) is level with MegaScience's model (63.0%, p = 0.78) and ahead of OpenReasoning-Nemotron-1.5B (54.7%, +8.8 [+1.9, +16.2], p = 0.012). Training on short physics solutions costs maths ability on the hardest problems (Level 5: 26.4%, vs 54.7% for R1-Distill); this is the main trade-off of the model.
+
+### Caveats
+
+- **Qwen3-1.7B (thinking mode) was planned but not finished**: loading and generating with it took too long on the free T4 within our sessions, so no claim is made about it. Other models of this size (for example Gemma, SmolLM or Phi models) were not tested either.
+- **Different engines.** The results of this model and base Qwen3.5-2B are the earlier ones, made with transformers; the other models ran on vLLM, a faster engine. Prompts, questions and grading are identical; tiny numerical differences between engines do not change greedy answers often enough to affect these gaps.
+- **One sample** per question for the sampled models; a different seed would move their scores by about a point, well inside the intervals.
+- **Rule judge only**, as everywhere in this repository: lower than and not comparable with the UGPhysics paper's GPT-4o-assisted leaderboard.
+<!-- compare:end -->
+
 ## 2. Development questions
 
 UGPhysics English questions ranked 0 to 99 inside each subject (1,258 questions). These were used to choose between training runs, checkpoints and adapter strengths, so scores here are slightly optimistic for the chosen model.
